@@ -25,7 +25,8 @@ Search Component:
 
 ## LLM Selection
 
-We can use the following leaderboard to see which LLMs would be appropriate for our study: https://lmarena.ai/leaderboard/copilot (original proposed in https://openreview.net/forum?id=3MW8GKNyzI).
+- mistral
+- ollama
 
 ## Resources
 
