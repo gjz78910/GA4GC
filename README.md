@@ -1,6 +1,7 @@
 # GreenerAgent
 
 ## General ideas:
+
 Coding agents’ idea:
 Plain:
 -	1st Open-source mistral (Ollama)
@@ -14,6 +15,7 @@ Green:
 -	Python for carbon print measurement
 Search Component:
 -	Parameter fine-tuning for the LLMs
+-	Parameters to optimise: runtime, costs (energy usage, $$$), number of agent turns 
 
 ## Steps for the Paper
 
@@ -25,7 +27,8 @@ Search Component:
 
 We can use the following leaderboard to see which LLMs would be appropriate for our study: https://lmarena.ai/leaderboard/copilot (original proposed in https://openreview.net/forum?id=3MW8GKNyzI).
 
-## SWE-Perf Benchmark
-https://swe-perf.github.io/
+## Resources
 
-https://swe-perf.github.io/leaderboard.html
+- SWE-Perf Benchmark Home: https://swe-perf.github.io/
+- SWE-Perf Leaderboard: https://swe-perf.github.io/leaderboard.html
+- SWE-Perf Paper: https://arxiv.org/pdf/2507.12415
