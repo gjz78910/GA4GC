@@ -15,6 +15,7 @@ Green:
 -	Python for carbon print measurement
 Search Component:
 -	Parameter fine-tuning for the LLMs
+-	Parameters to optimise: runtime, costs (energy usage, $$$), number of agent turns 
 
 ## Steps for the Paper
 
