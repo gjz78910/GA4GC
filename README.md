@@ -18,7 +18,7 @@ Search Component:
 ## Steps for the Paper
 
 1)	Preparing the Benchmark: Fitness is runtime + extend the code carbon from Python
-2)	Preparing the Open LLMs (Container): GA optimizing the carbon print and runtime. Maybe use different model sides. Potentially use Qwen2.5/Coder with different sizes.
+2)	Preparing the Open LLMs (Container): GA optimizing the carbon print and runtime. Maybe use different model sides. Maybe focus on 2 small models. Keep track of the paper cost/foot print.  [Potentially use Qwen2.5/Coder with different sizes].
 3)	Preparing the Mistral Code: measure the quality with the optimized version and see if it gets a better runtime or the same.
 
 
