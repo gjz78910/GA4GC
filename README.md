@@ -21,4 +21,6 @@ Search Component:
 2)	Preparing the Open LLMs (Container): GA optimizing the carbon print and runtime. Maybe use different model sides. Maybe focus on 2 small models. Keep track of the paper cost/foot print.  [Potentially use Qwen2.5/Coder with different sizes].
 3)	Preparing the Mistral Code: measure the quality with the optimized version and see if it gets a better runtime or the same.
 
+## LLM Selection
 
+We can use the following leaderboard to see which LLMs would be appropriate for our study: https://lmarena.ai/leaderboard/copilot (original proposed in https://openreview.net/forum?id=3MW8GKNyzI).
