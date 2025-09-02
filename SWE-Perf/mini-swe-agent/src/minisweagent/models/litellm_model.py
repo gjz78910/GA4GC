@@ -4,15 +4,6 @@ import os
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
-import time
-
-from evoml_services.clients.thanos.client import ThanosSettings
-from artemis_client.vision.client import VisionClient, VisionSettings
-from vision_models import LLMInferenceRequest, LLMAskInferenceRequest, LLMConversationMessage
- 
-thanos_settings = ThanosSettings.with_env_prefix("thanos", _env_file=".env")
-settings = VisionSettings.with_env_prefix("vision", _env_file=".env")
-client = VisionClient(settings, thanos_settings)
 
 import litellm
 from tenacity import (
@@ -68,65 +59,23 @@ class LitellmModel:
             e.message += " You can permanently set your API key with `mini-extra config set KEY VALUE`."
             raise e
 
-    # def query(self, messages: list[dict[str, str]], **kwargs) -> dict:
-    #     response = self._query(messages, **kwargs)
-    #     cost = litellm.cost_calculator.completion_cost(response)
-    #     self.n_calls += 1
-    #     self.cost += cost
-    #     GLOBAL_MODEL_STATS.add(cost)
-    #     return {
-    #         "content": response.choices[0].message.content or "",  # type: ignore
-    #     }
-
     def query(self, messages: list[dict[str, str]], **kwargs) -> dict:
-        ### VISION ###############################
-        max_retries = 5
-        base_delay = 2
-        
-        for attempt in range(max_retries):
-            try:
-                converted_messages = [
-                    LLMConversationMessage(
-                        role=message['role'], 
-                        content=message['content'] if isinstance(message['content'], str) else message['content'][0]['text']
-                    ) for message in messages
-                ]
-                
-                # Map model names to vision client format
-                model_type = self.config.model_name
-                if model_type == "gemini-2.5-pro":
-                    model_type = "gemini-v25-pro"  # Correct format
-                elif model_type == "claude-3-5-sonnet-20241022":
-                    model_type = "claude-v35-sonnet"  # Correct format
-                elif model_type == "claude-sonnet-4-20250514":
-                    model_type = "claude-v4-sonnet"  # Correct format
-                
-                response = client.ask(
-                    LLMAskInferenceRequest(
-                        messages=converted_messages,
-                        model_type=model_type,
-                        with_history=True
-                    )
-                )
-                
-                cost = response.task_info.total_cost
-                ##########################################
-                
-                self.n_calls += 1
-                self.cost += cost
-                GLOBAL_MODEL_STATS.add(cost)
-                return {"content": response.messages[-1].content or ""}
-                
-            except Exception as e:
-                error_msg = str(e)
-                if "Too many connections" in error_msg and attempt < max_retries - 1:
-                    delay = base_delay * (2 ** attempt)  # Exponential backoff: 2, 4, 8, 16, 32 seconds
-                    logger.warning(f"Vision client connection error (attempt {attempt + 1}/{max_retries}), retrying in {delay}s: {error_msg}")
-                    time.sleep(delay)
-                    continue
-                else:
-                    logger.error(f"Vision client error: {e}")
-                    raise e
+        response = self._query(messages, **kwargs)
+        try:
+            cost = litellm.cost_calculator.completion_cost(response)
+        except Exception as e:
+            logger.critical(
+                f"Error calculating cost for model {self.config.model_name}: {e}. "
+                "Please check the 'Updating the model registry' section in the documentation. "
+                "http://bit.ly/4p31bi4 Still stuck? Please open a github issue for help!"
+            )
+            raise
+        self.n_calls += 1
+        self.cost += cost
+        GLOBAL_MODEL_STATS.add(cost)
+        return {
+            "content": response.choices[0].message.content or "",  # type: ignore
+        }
 
     def get_template_vars(self) -> dict[str, Any]:
         return asdict(self.config) | {"n_model_calls": self.n_calls, "model_cost": self.cost}
