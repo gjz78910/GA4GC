@@ -5,7 +5,12 @@ GreenerAgent explores sustainable AI-driven software engineering by optimizing t
 ## Current Setup
 
 - **Framework**: Mini-SWE-Agent with SWE-Perf integration
-- **Models**: Mistral and Ollama (local + API)
+- **Models**:
+
+| Name | Access | Context Window |
+|------|---------|----------|
+| `Codestral 2508` | Mistral API | 256K |
+| `codestral:22b` | Ollama (local) | 32K |
 
 Our goal is to use NSGA-II to find Pareto optimal hyperparameter and prompt configurations that achieve the trade-off between:
 - **Agent Energy Efficiency**: Reduce computational costs and carbon footprint
