@@ -25,13 +25,13 @@ Our goal is to use NSGA-II to find Pareto optimal hyperparameter and prompt conf
 ## Next Steps for the Paper
 
 ### Phase 1: LLM Validation
-- [ ] Test if Mistral and Ollama models work with Mini-SWE-Agent
-- [ ] Run basic functionality tests on simple SWE-Perf tasks
-- [ ] Verify model API connections and local Ollama setup
+- [x] Test if Mistral and Ollama models work with Mini-SWE-Agent
+- [x] Run basic functionality tests on simple SWE-Perf tasks
+- [x] Verify model API connections and local Ollama setup
 
 ### Phase 2: Baseline Testing
-- [ ] Run Mini-SWE-Agent with default hyperparameters on SWE-Perf tasks
-- [ ] Measure baseline SWE-Perf performance scores
+- [x] Run Mini-SWE-Agent with default hyperparameters on SWE-Perf tasks
+- [x] Measure baseline SWE-Perf performance scores
 - [ ] Measure baseline energy metrics: execution time, API costs (Mistral), CPU/memory (Ollama)
 - [ ] Establish automated measurement procedures for consistent evaluation
 
