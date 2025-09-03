@@ -1,6 +1,6 @@
-# GreenerAgent
+# ECO-Agent
 
-GreenerAgent explores sustainable AI-driven software engineering by optimizing the energy consumption of LLM-based coding agents while maintaining performance. This project adapts [Mini-SWE-Agent](https://github.com/SWE-agent/mini-swe-agent) for the [SWE-Perf](https://swe-perf.github.io/) benchmark, focusing on performance optimization tasks.
+ECO-Agent explores sustainable AI-driven software engineering by optimizing the energy consumption of LLM-based coding agents while maintaining performance. This project adapts [Mini-SWE-Agent](https://github.com/SWE-agent/mini-swe-agent) for the [SWE-Perf](https://swe-perf.github.io/) benchmark, focusing on performance optimization tasks.
 
 ## Current Setup
 
