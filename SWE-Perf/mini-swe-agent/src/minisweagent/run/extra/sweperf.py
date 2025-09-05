@@ -93,8 +93,8 @@ def get_or_clone_repository(instance: dict) -> str:
     base_commit = instance["base_commit"]
     instance_id = instance["instance_id"]
     
-    # Create persistent directory for this specific instance
-    base_dir = Path.home() / "SWE-Perf" / "cloned_repos"
+    # Create persistent directory for this specific instance in current SWE-Perf directory
+    base_dir = Path.cwd() / "cloned_repos"
     base_dir.mkdir(parents=True, exist_ok=True)
     repo_dir = base_dir / instance_id
     
@@ -279,8 +279,31 @@ def process_instance(
         if exit_status == "Submitted" and result:
             # Look for git diff in the result
             if "diff --git" in str(result):
-                # The result contains the git diff, use it directly
-                logger.info(f"Instance {instance_id}: Found git diff in result, length: {len(str(result))}")
+                # Extract clean git diff from submission text
+                result_str = str(result)
+                
+                # Find the start of the git diff
+                diff_start = result_str.find("diff --git")
+                if diff_start != -1:
+                    # Find the end - look for markers or end of text
+                    remaining_text = result_str[diff_start:]
+                    
+                    # Look for end markers
+                    end_markers = ["=== PATCH_END ===", "CLEANING REPOSITORY STATE", "COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT"]
+                    diff_end = len(remaining_text)
+                    
+                    for marker in end_markers:
+                        marker_pos = remaining_text.find(marker)
+                        if marker_pos != -1:
+                            diff_end = min(diff_end, marker_pos)
+                    
+                    # Extract the clean git diff
+                    clean_diff = remaining_text[:diff_end].strip()
+                    result = clean_diff
+                    logger.info(f"Instance {instance_id}: Extracted clean git diff, length: {len(result)}")
+                else:
+                    logger.warning(f"Instance {instance_id}: Found 'diff --git' but couldn't locate start position")
+                    logger.info(f"Instance {instance_id}: Using full result, length: {len(str(result))}")
             else:
                 # Try to extract git diff from the final command output
                 logger.warning(f"Instance {instance_id}: No git diff found in result, attempting to extract from git")
