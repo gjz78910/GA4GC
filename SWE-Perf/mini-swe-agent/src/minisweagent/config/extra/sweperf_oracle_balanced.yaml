@@ -130,7 +130,15 @@ agent:
     ### STEP 10: SUBMIT IMMEDIATELY    
     When you've completed your optimizations, execute this EXACT command to TERMINATE THE SESSION:
     ```bash
-    echo "=== PATCH_START ===" && echo "STAGING TARGET FILES..." && git add -A && echo "GENERATING PATCH..." && git diff --cached && echo "=== PATCH_END ===" && echo "CLEANING REPOSITORY STATE..." && git reset --hard HEAD && git clean -fdx && echo "COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT"
+    echo "=== PATCH_START ===" && 
+    echo "STAGING ONLY TARGET FILES..." && 
+    git status --porcelain | grep -E '^M|^A|^D' | awk '{print \$2}' | grep -v -E '\.(log|tmp|bak|orig|rej|patch|diff|pyc)$' | grep -v -E '(test_.*|.*_test|benchmark_.*|__pycache__)' | xargs -r git add && 
+    echo "GENERATING PATCH..." && 
+    git diff --cached && 
+    echo "=== PATCH_END ===" && 
+    echo "FINAL CLEANUP..." && 
+    git reset --hard HEAD && git clean -fdx && 
+    echo "COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT"
     ```
     *** DO NOT simplify or modify this command - run it EXACTLY as shown above! ***
     *** AFTER RUNNING THE SUBMISSION COMMAND ABOVE, STOP RESPONDING IMMEDIATELY! ***
