@@ -1,0 +1,119 @@
+2025-09-10 16:13:24,327 - minisweagent - INFO - Loading dataset SWE-Perf/SWE-Perf...
+2025-09-10 16:13:26,575 - minisweagent - INFO - Instance slice: 140 -> 2 instances
+2025-09-10 16:13:26,576 - minisweagent - INFO - Running on 2 instances...
+2025-09-10 16:13:26,577 - minisweagent - INFO - First instance ID: astropy__astropy-16065
+2025-09-10 16:13:26,577 - minisweagent - INFO - First instance keys: ['repo', 'instance_id', 'patch', 'test_patch', 'base_commit']
+2025-09-10 16:13:29,616 - minisweagent - INFO - Setting up environment for instance astropy__astropy-16065
+2025-09-10 16:13:29,617 - minisweagent - INFO - Found existing repository for astropy__astropy-16065, checking commit...
+2025-09-10 16:13:29,628 - minisweagent - INFO - Repository astropy__astropy-16065 already at correct commit 48a792f9d8dc659f428e9c6f0e9e9964a1b60682
+2025-09-10 16:13:29,629 - minisweagent - INFO - Created SWE-Perf environment with working directory: /home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/ga/cloned_repos/astropy__astropy-16065
+2025-09-10 16:13:29,630 - minisweagent - INFO - Creating agent for instance astropy__astropy-16065
+2025-09-10 16:13:29,631 - minisweagent - INFO - Running agent on task: Please enhance the computational efficiency and execution speed across the entire repository. The op...
+2025-09-10 16:13:29,632 - minisweagent - INFO - Instance astropy__astropy-16065: Starting agent execution...
+2025-09-10 16:13:29,646 - minisweagent - INFO - Instance astropy__astropy-16065: Starting Step 1 ($0.00)
+2025-09-10 16:13:29,659 - minisweagent - ERROR - Error processing instance astropy__astropy-16065: litellm.AuthenticationError: Missing Anthropic API Key - A call is being made to anthropic but no key is set either in the environment variables or via params. Please set `ANTHROPIC_API_KEY` in your environment vars You can permanently set your API key with `mini-extra config set KEY VALUE`.
+Traceback (most recent call last):
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/run/extra/sweperf.py", line 274, in process_instance
+    exit_status, result = agent.run(task)
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/agents/default.py", line 79, in run
+    self.step()
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/run/extra/sweperf.py", line 79, in step
+    result = super().step()
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/agents/default.py", line 88, in step
+    return self.get_observation(self.query())
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/agents/default.py", line 94, in query
+    response = self.model.query(self.messages)
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/models/anthropic.py", line 19, in query
+    return super().query(set_cache_control(messages), api_key=api_key, **kwargs)
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/models/litellm_model.py", line 63, in query
+    response = self._query(messages, **kwargs)
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/tenacity/__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/models/litellm_model.py", line 60, in _query
+    raise e
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/models/litellm_model.py", line 55, in _query
+    return litellm.completion(
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/litellm/utils.py", line 1344, in wrapper
+    raise e
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/litellm/utils.py", line 1219, in wrapper
+    result = original_function(*args, **kwargs)
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/litellm/main.py", line 3582, in completion
+    raise exception_type(
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/litellm/main.py", line 2236, in completion
+    response = anthropic_chat_completions.completion(
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/litellm/llms/anthropic/chat/handler.py", line 319, in completion
+    headers = AnthropicConfig().validate_environment(
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/litellm/llms/anthropic/common_utils.py", line 151, in validate_environment
+    raise litellm.AuthenticationError(
+litellm.exceptions.AuthenticationError: litellm.AuthenticationError: Missing Anthropic API Key - A call is being made to anthropic but no key is set either in the environment variables or via params. Please set `ANTHROPIC_API_KEY` in your environment vars You can permanently set your API key with `mini-extra config set KEY VALUE`.
+2025-09-10 16:13:29,681 - minisweagent - INFO - Saved trajectory to 'results/astropy__astropy-16065/astropy__astropy-16065.traj.json'
+2025-09-10 16:13:29,685 - minisweagent - INFO - Setting up environment for instance astropy__astropy-16058
+2025-09-10 16:13:29,687 - minisweagent - INFO - Cloning astropy/astropy to /home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/ga/cloned_repos/astropy__astropy-16058...
+2025-09-10 16:13:44,489 - minisweagent - INFO - Checking out commit 5d774502db2d02898824ca83c30873c33fac9fc7...
+2025-09-10 16:13:45,053 - minisweagent - INFO - Successfully prepared astropy/astropy at commit 5d774502db2d02898824ca83c30873c33fac9fc7
+2025-09-10 16:13:45,054 - minisweagent - INFO - Created SWE-Perf environment with working directory: /home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/ga/cloned_repos/astropy__astropy-16058
+2025-09-10 16:13:45,055 - minisweagent - INFO - Creating agent for instance astropy__astropy-16058
+2025-09-10 16:13:45,055 - minisweagent - INFO - Running agent on task: Please enhance the computational efficiency and execution speed across the entire repository. The op...
+2025-09-10 16:13:45,056 - minisweagent - INFO - Instance astropy__astropy-16058: Starting agent execution...
+2025-09-10 16:13:45,059 - minisweagent - INFO - Instance astropy__astropy-16058: Starting Step 1 ($0.00)
+2025-09-10 16:13:45,062 - minisweagent - ERROR - Error processing instance astropy__astropy-16058: litellm.AuthenticationError: Missing Anthropic API Key - A call is being made to anthropic but no key is set either in the environment variables or via params. Please set `ANTHROPIC_API_KEY` in your environment vars You can permanently set your API key with `mini-extra config set KEY VALUE`.
+Traceback (most recent call last):
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/run/extra/sweperf.py", line 274, in process_instance
+    exit_status, result = agent.run(task)
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/agents/default.py", line 79, in run
+    self.step()
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/run/extra/sweperf.py", line 79, in step
+    result = super().step()
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/agents/default.py", line 88, in step
+    return self.get_observation(self.query())
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/agents/default.py", line 94, in query
+    response = self.model.query(self.messages)
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/models/anthropic.py", line 19, in query
+    return super().query(set_cache_control(messages), api_key=api_key, **kwargs)
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/models/litellm_model.py", line 63, in query
+    response = self._query(messages, **kwargs)
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/tenacity/__init__.py", line 400, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/models/litellm_model.py", line 60, in _query
+    raise e
+  File "/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/SWE-Perf/mini-swe-agent/src/minisweagent/models/litellm_model.py", line 55, in _query
+    return litellm.completion(
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/litellm/utils.py", line 1344, in wrapper
+    raise e
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/litellm/utils.py", line 1219, in wrapper
+    result = original_function(*args, **kwargs)
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/litellm/main.py", line 3582, in completion
+    raise exception_type(
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/litellm/main.py", line 2236, in completion
+    response = anthropic_chat_completions.completion(
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/litellm/llms/anthropic/chat/handler.py", line 319, in completion
+    headers = AnthropicConfig().validate_environment(
+  File "/home/ubuntu/dataAvner/ssbseAgents/venvagents/lib/python3.10/site-packages/litellm/llms/anthropic/common_utils.py", line 151, in validate_environment
+    raise litellm.AuthenticationError(
+litellm.exceptions.AuthenticationError: litellm.AuthenticationError: Missing Anthropic API Key - A call is being made to anthropic but no key is set either in the environment variables or via params. Please set `ANTHROPIC_API_KEY` in your environment vars You can permanently set your API key with `mini-extra config set KEY VALUE`.
+2025-09-10 16:13:45,073 - minisweagent - INFO - Saved trajectory to 'results/astropy__astropy-16058/astropy__astropy-16058.traj.json'
+2025-09-10 16:13:45,080 - minisweagent - INFO - SWE-Perf predictions saved to results/sweperf_predictions_20250910_161324.jsonl

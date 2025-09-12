@@ -1,0 +1,4 @@
+instances_by_exit_status:
+    AuthenticationError:
+    - astropy__astropy-16065
+    - astropy__astropy-16058
