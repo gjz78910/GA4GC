@@ -12,6 +12,7 @@ def calculate_performance_result(sweperf_data, log_root):
     human_improved = []
     model_improved = []
     human_total = []
+
     for _, data in sweperf_data.iterrows():
         id = data['instance_id']
         duration_changes = data["duration_changes"]
@@ -121,6 +122,7 @@ if __name__ == '__main__':
     log_root = args.log_root
     sweperf_data = load_sweperf_dataset(args.dataset_dir)
     sweperf_data = pd.DataFrame(sweperf_data)
+
     results = []
     # performence_paths = []
     # for log_root in log_roots:
@@ -129,7 +131,9 @@ if __name__ == '__main__':
     print("[total]")
     result = calculate_performance_result(sweperf_data, log_root)
     result["repo"] = "total"
+    predictions=result["with_prediction"]
     results.append(result)
+    i=0
     for repo, group in sweperf_data.groupby('repo'):
         print("================================")
         print(log_root)
@@ -138,7 +142,11 @@ if __name__ == '__main__':
         if result:
             result["repo"] = repo
             results.append(result)
+        i += len(group)
+        if(i > predictions):
+            break
     # save results to csv
+    
     df = pd.DataFrame(results)
     log_instance = log_root.split('/')[-1]
 

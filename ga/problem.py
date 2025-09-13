@@ -7,11 +7,11 @@ class ConfigProblem(ElementwiseProblem):
 
     def __init__(self):
         super().__init__(
-            n_var=5,               # number of decision variables
-            n_obj=2,               # number of objectives
+            n_var=7,               # number of decision variables
+            n_obj=3,               # number of objectives
             n_constr=0,            # no constraints for now
-            xl=np.array([10, 0.1, 0.0, 0.1, 512]),   # lower bounds
-            xu=np.array([100, 5.0, 1.0, 1.0, 4096])  # upper bounds
+            xl=np.array([10, 0.1, 0.0, 0.1, 512,40,40]),   # lower bounds
+            xu=np.array([40, 5.0, 1.0, 1.0, 4096,60,60])  # upper bounds
         )
         self.base_config = {
             "step_limit": 40,
@@ -52,6 +52,8 @@ class ConfigProblem(ElementwiseProblem):
         cfg["model"]["model_kwargs"]["temperature"] = float(genome[2])
         cfg["model"]["model_kwargs"]["top_p"] = float(genome[3])
         cfg["model"]["model_kwargs"]["max_tokens"] = int(genome[4])
+        cfg["model"]["model_kwargs"]["timeout"] = int(genome[5])
+        cfg["environment"]["timeout"] = int(genome[6])
         return cfg
 
         
@@ -62,17 +64,17 @@ class ConfigProblem(ElementwiseProblem):
         agent=AgentRunner(config_file,config_dict)
         final_config= agent.render(baseline_file)
         result = agent.runner(final_config)
-
+        print(result)
         # Toy objectives
-        f1 = result[0]
-        f2 = result[1]
-
+        f1 = result.iloc[1]["performance"]
+        f2 = result.iloc[1]["model_improved"]
+        
         out["F"] = [f1, f2]
 
-# def main():
-#     out={}
-#     genome = [40,3.0,0.0,1.0,4096]
-#     problem = ConfigProblem()
-#     problem._evaluate(genome, out)
-
-# main()
+#def main():
+#    out={}
+#    genome = [1,3.0,0.0,1.0,4096,10,10]
+#    problem = ConfigProblem()
+#    problem._evaluate(genome, out)
+#
+#main()

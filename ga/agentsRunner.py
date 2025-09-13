@@ -46,12 +46,13 @@ class AgentRunner():
 
     def runner(self, config_file):
         cmd1 = [
-            "python", "-m", "minisweagent.run.extra.sweperf",
+            "sudo", "-E" ,"env" , f"PATH={os.environ['PATH']}",
+            "python3", "-m", "minisweagent.run.extra.sweperf",
             "--subset", "sweperf",
             "--split", "test",
             "--slice", "0:2",
             "--config", config_file,
-            "--workers", "1"
+            "--workers", "30"
         ]
         print(cmd1)
         result = subprocess.run(cmd1, check=True, capture_output=True, text=True)
@@ -80,7 +81,7 @@ class AgentRunner():
             "--dataset_name", "SWE-Perf/SWE-Perf",
             "--split", "test",
             "--predictions_path", predictions_path,
-            "--max_workers", "1",
+            "--max_workers", "30",
             "--run_id", run_id
         ]
     
@@ -98,7 +99,7 @@ class AgentRunner():
         df = pd.read_csv(output_path)
         
         # Select only model_improved and performance
-        result = df[["model_improved", "performance"]]
+        result = df[["model_improved", "performance","success"]]
         return result
 
 
