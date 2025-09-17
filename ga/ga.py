@@ -9,11 +9,11 @@ problem = ConfigProblem()
 
 # Configure NSGA2
 algorithm = NSGA2(
-    pop_size=2,
+    pop_size=5,
     eliminate_duplicates=True
 )
 
-termination = get_termination("n_gen", 2)  # run for 30 generations
+termination = get_termination("n_gen", 5)  # run for 30 generations
 
 # Run optimization
 res = minimize(problem,
@@ -46,7 +46,7 @@ def genome_to_dict(genome, base_config):
     return cfg
 
 # Convert the first Pareto-optimal solution
-best_config = genome_to_dict(res.X[0], your_config_dict)
+best_config = genome_to_dict(res.X[0], problem.base_config)
 print("\nBest Config Dict Example:\n", best_config)
 
 

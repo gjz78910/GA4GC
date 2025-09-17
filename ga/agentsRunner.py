@@ -50,7 +50,7 @@ class AgentRunner():
             "python3", "-m", "minisweagent.run.extra.sweperf",
             "--subset", "sweperf",
             "--split", "test",
-            "--slice", "0:2",
+            "--slice", "0:5",
             "--config", config_file,
             "--workers", "30"
         ]

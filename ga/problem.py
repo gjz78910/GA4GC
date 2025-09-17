@@ -1,21 +1,22 @@
 import numpy as np
 from pymoo.core.problem import ElementwiseProblem
 import copy
+import time
 from agentsRunner import AgentRunner
 
 class ConfigProblem(ElementwiseProblem):
 
     def __init__(self):
         super().__init__(
-            n_var=7,               # number of decision variables
+            n_var=8,               # number of decision variables
             n_obj=3,               # number of objectives
             n_constr=0,            # no constraints for now
-            xl=np.array([10, 0.1, 0.0, 0.1, 512,40,40]),   # lower bounds
-            xu=np.array([40, 5.0, 1.0, 1.0, 4096,60,60])  # upper bounds
+            xl=np.array([10, 3.0, 0.0, 0.1, 512,40,40,1]),   # lower bounds
+            xu=np.array([40, 10.0, 1.0, 1.0, 4096,60,60,3])  # upper bounds
         )
         self.base_config = {
             "step_limit": 40,
-            "cost_limit": 3.0,
+            "cost_limit": 1000000,
             "environment": {
                 "timeout": 60,
                 "env": {
@@ -60,20 +61,24 @@ class ConfigProblem(ElementwiseProblem):
     def _evaluate(self, x, out, *args, **kwargs):
         config_dict = self.genome_to_dict(x)
         config_file="/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/template.yaml"
-        baseline_file="/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/baseline.yaml"
+        baseline_file="/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/baseline" + str(round(x[7])) + ".yaml"
         agent=AgentRunner(config_file,config_dict)
         final_config= agent.render(baseline_file)
+
+        start_time = time.time()
         result = agent.runner(final_config)
+        elapsed_time = time.time() - start_time 
         print(result)
         # Toy objectives
-        f1 = result.iloc[1]["performance"]
+        f1 = elapsed_time 
         f2 = result.iloc[1]["model_improved"]
+        f3 = result.iloc[1]["success"]
         
-        out["F"] = [f1, f2]
+        out["F"] = [f1, -f2, -f3]
 
 #def main():
 #    out={}
-#    genome = [1,3.0,0.0,1.0,4096,10,10]
+#    genome = [40,100000,0.0,1.0,4096,600,600,1]
 #    problem = ConfigProblem()
 #    problem._evaluate(genome, out)
 #

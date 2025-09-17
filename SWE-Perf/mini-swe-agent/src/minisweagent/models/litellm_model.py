@@ -63,6 +63,7 @@ class LitellmModel:
         response = self._query(messages, **kwargs)
         try:
             cost = litellm.cost_calculator.completion_cost(response)
+            logger.critical(response['usage']['total_tokens'])
         except Exception as e:
             logger.critical(
                 f"Error calculating cost for model {self.config.model_name}: {e}. "
