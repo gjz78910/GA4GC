@@ -16,3 +16,7 @@ pip install django
 
 cd SWE-Perf
 pip install -r requirements.txt
+
+## Might need to fix:
+# ~/ECO-Agent-main/ga$ sed -i "s|/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/baseline.yaml|../baseline1.yaml|g" problem.py
+# ~/ECO-Agent-main/ga$ sed -i "s|/home/ubuntu/dataAvner/ssbseAgents/GreenerAgent/baseline.yaml|../baseline1.yaml|g" agentsRunner.py
