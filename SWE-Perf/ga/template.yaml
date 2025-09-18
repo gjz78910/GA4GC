@@ -1,0 +1,23 @@
+step_limit: {{ config.step_limit }}
+cost_limit: {{ config.cost_limit }}
+environment:
+  timeout: {{ config.environment.timeout }}
+  env:
+    PAGER: "cat"
+    MANPAGER: "cat"
+    LESS: "-R"
+    PIP_PROGRESS_BAR: "off"
+    TQDM_DISABLE: "1"
+  environment_class: "local"
+model:
+  model_name: "{{ config.model.model_name }}"
+  model_kwargs:
+    temperature: {{ config.model.model_kwargs.temperature }}
+    top_p: {{ config.model.model_kwargs.top_p }}
+    top_k: {{ config.model.model_kwargs.top_k }}
+    max_tokens: {{ config.model.model_kwargs.max_tokens }}
+    stop: {{ config.model.model_kwargs.stop }}
+    frequency_penalty: {{ config.model.model_kwargs.frequency_penalty }}
+    presence_penalty: {{ config.model.model_kwargs.presence_penalty }}
+    timeout: {{ config.model.model_kwargs.timeout }}
+    drop_params: {{ config.model.model_kwargs.drop_params }}
