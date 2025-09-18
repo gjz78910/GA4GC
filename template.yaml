@@ -1,0 +1,36 @@
+# ===============================================
+# AGENT BEHAVIOR HYPERPARAMETERS
+# ===============================================
+step_limit: {{ config.step_limit|default:40 }}
+cost_limit: {{ config.cost_limit|default:3.0 }}
+
+# ===============================================
+# EXECUTION ENVIRONMENT CONFIGURATION
+# ===============================================
+environment:
+  timeout: {{ config.environment.timeout|default:60 }}
+  env:
+    PAGER: "{{ config.environment.env.PAGER|default:'cat' }}"
+    MANPAGER: "{{ config.environment.env.MANPAGER|default:'cat' }}"
+    LESS: "{{ config.environment.env.LESS|default:'-R' }}"
+    PIP_PROGRESS_BAR: "{{ config.environment.env.PIP_PROGRESS_BAR|default:'off' }}"
+    TQDM_DISABLE: "{{ config.environment.env.TQDM_DISABLE|default:'1' }}"
+  environment_class: "{{ config.environment.environment_class|default:'local' }}"
+
+# ===============================================
+# LLM MODEL HYPERPARAMETERS
+# ===============================================
+model:
+  model_name: "{{ config.model.model_name|default:'ollama/qwen3' }}"
+  model_kwargs:
+    temperature: {{ config.model.model_kwargs.temperature|default:0.0 }}
+    top_p: {{ config.model.model_kwargs.top_p|default:1.0 }}
+    top_k: {{ config.model.model_kwargs.top_k|default:-1 }}
+    max_tokens: {{ config.model.model_kwargs.max_tokens|default:4096 }}
+    # If `stop` is empty/undefined, output YAML null
+    stop: {% if config.model.model_kwargs.stop %}"{{ config.model.model_kwargs.stop }}"{% else %}null{% endif %}
+    frequency_penalty: {{ config.model.model_kwargs.frequency_penalty|default:0.0 }}
+    presence_penalty: {{ config.model.model_kwargs.presence_penalty|default:0.0 }}
+    timeout: {{ config.model.model_kwargs.timeout|default:60 }}
+    drop_params: {% if config.model.model_kwargs.drop_params %}true{% else %}false{% endif %}
+    api_base: "http://localhost:11434"
