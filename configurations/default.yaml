@@ -1,0 +1,134 @@
+agent:
+  system_template: |
+    You're a balanced runtime performance optimization specialist.
+    Your goal is to comprehensively optimize the specified objective function's runtime performance while maintaining functional correctness and test compatibility.
+
+    *** CRITICAL: PROVIDE EXACTLY ONE COMMAND PER RESPONSE ***
+    *** NEVER PROVIDE MULTIPLE COMMANDS IN ONE RESPONSE ***
+    *** THE SYSTEM WILL REJECT MULTIPLE COMMANDS ***
+
+    For each response:
+    1. Include a STRATEGIC THOUGHT section with detailed analysis and planning
+    2. Provide exactly ONE bash command to execute
+    Format your response as shown in <format_example>:
+
+    <format_example>
+    THOUGHT: Detailed analysis of optimization strategy, impact assessment, and implementation plan.
+
+    ```bash
+    your_command_here
+    ```
+    </format_example>
+
+    ### SUBMISSION COMMAND    
+    When you've completed your optimizations, execute this EXACT command to TERMINATE THE SESSION:
+    ```bash
+    echo "=== PATCH_START ===" && 
+    echo "STAGING ONLY TARGET FILES..." && 
+    git status --porcelain | grep -E '^M|^A|^D' | awk '{print \$2}' | grep -v -E '\.(log|tmp|bak|orig|rej|patch|diff|pyc)$' | grep -v -E '(test_.*|.*_test|benchmark_.*|__pycache__)' | xargs -r git add && 
+    echo "GENERATING PATCH..." && 
+    git diff --cached && 
+    echo "=== PATCH_END ===" && 
+    echo "FINAL CLEANUP..." && 
+    git reset --hard HEAD && git clean -fdx && 
+    echo "COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT"
+    ```
+    *** DO NOT simplify or modify this command - run it EXACTLY as shown above! ***
+    *** AFTER RUNNING THE SUBMISSION COMMAND ABOVE, STOP RESPONDING IMMEDIATELY! ***
+    *** THE SESSION ENDS AFTER THIS SUBMISSION COMMAND! ***
+
+  instance_template: |
+    <performance_optimization_task>
+    {{task}}
+    </performance_optimization_task>
+
+    Follow the system instructions exactly.
+    Target file/function is specified in the task above - analyze the objective function comprehensively then optimize strategically.
+
+  action_observation_template: |
+    <returncode>{{output.returncode}}</returncode>
+    {% if output.output | length < 10000 -%}
+    <output>
+    {{ output.output -}}
+    </output>
+    {%- else -%}
+    <warning>
+    The output of your last command was too long.
+    Please try a different command that produces less output.
+    If you're looking at a file you can try to use head, tail or sed to view a smaller number of lines selectively.
+    If you're using grep or find and it produced too much output, you can use a more selective search pattern.
+    If you really need to see something from the full command's output, you can redirect output to a file and then search in that file.
+    </warning>
+    {%- set elided_chars = output.output | length - 10000 -%}
+    <output_head>
+    {{ output.output[:5000] }}
+    </output_head>
+    <elided_chars>
+    {{ elided_chars }} characters elided
+    </elided_chars>
+    <output_tail>
+    {{ output.output[-5000:] }}
+    </output_tail>
+    {%- endif -%}
+    
+  format_error_template: |
+    Please always provide EXACTLY ONE action in triple backticks, found {{actions|length}} actions.
+
+    Please format your action in triple backticks as shown in <response_example>.
+
+    <response_example>
+    Here are some thoughts about why you want to perform the action.
+
+    ```bash
+    <action>
+    ```
+    </response_example>
+
+    If you have completed your assignment, please consult the first message about how to
+    submit your solution (you will not be able to continue working on this task after that).
+  
+  
+# ===============================================
+# AGENT BEHAVIOR HYPERPARAMETERS
+# ===============================================
+  # Controls agent termination conditions and conversation limits
+  step_limit: 240                 # Maximum agent steps/turns 
+  cost_limit: 3.0                # Maximum cost in USD before stopping
+
+# ===============================================
+# EXECUTION ENVIRONMENT CONFIGURATION
+# ===============================================
+environment:
+  timeout: 60                    # Command timeout in seconds
+  env:
+    PAGER: cat                   # Non-interactive pager
+    MANPAGER: cat               # Non-interactive manual pager  
+    LESS: -R                    # LESS options (raw color codes)
+    PIP_PROGRESS_BAR: 'off'     # Disable pip progress bars
+    TQDM_DISABLE: '1'           # Disable tqdm progress bars
+  environment_class: local      # Use local execution environment
+
+# ===============================================
+# LLM MODEL HYPERPARAMETERS  
+# ===============================================
+model:
+  model_name: "claude-3-5-sonnet-20241022"
+  model_kwargs:
+    # Core Sampling Parameters
+    temperature: 0.0              # Randomness (0.0-2.0, lower = more deterministic)
+    # top_p: 1.0                   # Nucleus sampling (0.0-1.0)
+    # top_k: -1                    # Top-k sampling (-1 = disabled)
+    
+    # # Response Control
+    # max_tokens: 4096             # Maximum response length
+    # stop: null                   # Stop sequences (string or list)
+    
+    # # Frequency Control  
+    # frequency_penalty: 0.0       # Penalize frequent tokens (-2.0 to 2.0)
+    # presence_penalty: 0.0        # Penalize present tokens (-2.0 to 2.0)
+    
+    # # System Parameters
+    timeout: 60                  # Request timeout in seconds  
+    drop_params: true            # Drop unsupported params instead of error
+    
+

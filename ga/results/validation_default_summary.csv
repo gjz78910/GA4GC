@@ -1,0 +1,2 @@
+evaluation_id,timestamp,agent_run_id,config_file,slice_range,objective1_execution_time,objective2_model_improved,objective3_success,status,error_message
+1,2025-09-20 18:46:10,mini_swe_agent_20250920_183802,../configurations/default.yaml,9:12,489.14224338531494,0.0,0.0,success,
