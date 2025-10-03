@@ -30,6 +30,9 @@ GA4GC/
 │   ├── run_single_config.py    # Single configuration evaluator
 │   ├── template.yaml           # Configuration template
 │   ├── evaluation/             # Evaluation infrastructure
+│   ├── figures/                # Visualization results
+│   │   ├── pareto_front_evolution.pdf  # 3D Pareto front evolution
+│   │   └── convergence_metrics.pdf     # Hypervolume and growth metrics
 │   └── results/                # Optimization and analysis results
 ├── configurations/             # Agent configuration files
 │   ├── default.yaml            # Baseline configuration (1513.3s runtime)
@@ -68,6 +71,23 @@ GA4GC explores three distinct prompt template strategies, each optimized for dif
 - **Strategy**: Systematic, thorough optimization with extensive verification
 - **Use Case**: Performance-critical scenarios where code optimization is paramount
 - **Characteristics**: Detailed analysis, multiple optimization passes, extensive verification
+
+## Optimization Visualizations
+
+We provides two key visualizations demonstrating directed 3-objective optimization:
+
+### Pareto Front Evolution (`ga/figures/pareto_front_evolution.pdf`)
+- 5 generations of Pareto front evolution in 3D space
+- Gray points: All evaluated configurations
+- Colored points (Red→Purple): Pareto-optimal solutions per generation
+- Gold star: Default configuration baseline
+- Shows systematic growth from 2→5 solutions with evolutionary memory
+
+### Convergence Metrics (`ga/figures/convergence_metrics.pdf`)
+- Hypervolume: 70.6%→83.0% (+17.5%)
+- Pareto solutions: 2→5 (+150%)
+- 80% of configurations dominated by final front
+- Demonstrates directed search with clear upward trends
 
 ## Installation
 
