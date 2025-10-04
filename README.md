@@ -74,9 +74,9 @@ GA4GC explores three distinct prompt template strategies, each optimized for dif
 
 ## Optimization Visualizations
 
-We provides two key visualizations demonstrating directed 3-objective optimization:
+### NSGA-II Performance
 
-### Pareto Front Evolution
+#### Pareto Front Evolution (`pareto_front_evolution.jpg`)
 
 ![Pareto Front Evolution](ga/figures/pareto_front_evolution.jpg)
 
@@ -86,7 +86,7 @@ We provides two key visualizations demonstrating directed 3-objective optimizati
 - Gold star: Default configuration baseline
 - Shows systematic growth from 2→5 solutions with evolutionary memory
 
-### Convergence Metrics
+#### Convergence Metrics (`convergence_metrics.jpg`)
 
 ![Convergence Metrics](ga/figures/convergence_metrics.jpg)
 
@@ -94,6 +94,28 @@ We provides two key visualizations demonstrating directed 3-objective optimizati
 - Pareto solutions: 2→5 (+150%)
 - 80% of configurations dominated by final front
 - Demonstrates directed search with clear upward trends
+
+### Baseline Comparison: NSGA-II vs Random Search
+
+To validate NSGA-II performs directed search (not random behavior), we compared against random search with the same evaluation budget (25 configurations).
+
+#### Evolution Comparison (`comparison_pareto_fronts.jpg`)
+
+![Comparison Pareto Fronts](ga/figures/comparison_pareto_fronts.jpg)
+
+- **NSGA-II (top)**: Systematic growth 2→3→4→5→5 solutions
+- **Random Search (bottom)**: Stagnation 2→2→2→3→3 solutions
+- NSGA-II discovers 2 more Pareto solutions (+67%)
+
+#### Convergence Comparison (`comparison_convergence.jpg`)
+
+![Comparison Convergence](ga/figures/comparison_convergence.jpg)
+
+- **Hypervolume**: NSGA-II 83.0% vs Random 53.1% (+29.9% advantage)
+- **Pareto Size**: NSGA-II 5 vs Random 3 (+67% more solutions)
+- **Solution Quality**: NSGA-II achieves 8 correctness (vs 6) and 10.67% performance (vs 7.05%)
+
+**Conclusion**: NSGA-II significantly outperforms random search, demonstrating directed multi-objective optimization with systematic convergence and superior solution quality.
 
 ## Installation
 
