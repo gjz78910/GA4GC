@@ -8,6 +8,8 @@ GA4GC (Greener Agent for Greener Code) addresses the critical challenge of susta
 
 **Our Solution**: GA4GC employs NSGA-II multi-objective optimization to automatically discover Pareto-optimal agent configurations across the vast hyperparameter space, enabling up to **37.7% agent runtime reduction** while improving code performance and correctness.
 
+![GA4GC Workflow](ga/figures/workflow.jpg)
+
 ## Research Contributions
 
 This framework demonstrates three key contributions:
@@ -31,8 +33,6 @@ GA4GC/
 │   ├── template.yaml           # Configuration template
 │   ├── evaluation/             # Evaluation infrastructure
 │   ├── figures/                # Visualization results
-│   │   ├── pareto_front_evolution.pdf  # 3D Pareto front evolution
-│   │   └── convergence_metrics.pdf     # Hypervolume and growth metrics
 │   └── results/                # Optimization and analysis results
 ├── configurations/             # Agent configuration files
 │   ├── default.yaml            # Baseline configuration (1513.3s runtime)
@@ -76,14 +76,20 @@ GA4GC explores three distinct prompt template strategies, each optimized for dif
 
 We provides two key visualizations demonstrating directed 3-objective optimization:
 
-### Pareto Front Evolution (`ga/figures/pareto_front_evolution.pdf`)
+### Pareto Front Evolution
+
+![Pareto Front Evolution](ga/figures/pareto_front_evolution.jpg)
+
 - 5 generations of Pareto front evolution in 3D space
 - Gray points: All evaluated configurations
 - Colored points (Red→Purple): Pareto-optimal solutions per generation
 - Gold star: Default configuration baseline
 - Shows systematic growth from 2→5 solutions with evolutionary memory
 
-### Convergence Metrics (`ga/figures/convergence_metrics.pdf`)
+### Convergence Metrics
+
+![Convergence Metrics](ga/figures/convergence_metrics.jpg)
+
 - Hypervolume: 70.6%→83.0% (+17.5%)
 - Pareto solutions: 2→5 (+150%)
 - 80% of configurations dominated by final front
