@@ -161,6 +161,21 @@ default_runtime, default_perf, default_corr = 1513.3, 0.0, 2.0
 # Colors for generations: red, orange, green, blue, purple
 gen_colors = ['#e41a1c', '#ff7f00', '#4daf4a', '#377eb8', '#984ea3']
 
+# Calculate fixed axis limits across both methods for consistent visualization
+combined_df = pd.concat([df_nsga, df_random])
+runtime_min, runtime_max = combined_df['runtime'].min(), combined_df['runtime'].max()
+perf_min, perf_max = combined_df['performance'].min(), combined_df['performance'].max()
+corr_min, corr_max = combined_df['correctness'].min(), combined_df['correctness'].max()
+
+# Add padding for better visualization
+runtime_padding = (runtime_max - runtime_min) * 0.1
+perf_padding = (perf_max - perf_min) * 0.1
+corr_padding = (corr_max - corr_min) * 0.1
+
+runtime_lim = (max(0, runtime_min - runtime_padding), runtime_max + runtime_padding)
+perf_lim = (max(0, perf_min - perf_padding), perf_max + perf_padding)
+corr_lim = (max(0, corr_min - corr_padding), corr_max + corr_padding)
+
 methods = [
     ("NSGA-II", df_nsga, nsga_fronts, '#d73027', 1),
     ("Random Search", df_random, random_fronts, '#1f78b4', 2)
@@ -210,6 +225,11 @@ for method_name, df, pareto_fronts_dict, main_color, row in methods:
                   transform=ax.transAxes, fontweight='bold', fontsize=10,
                   ha='center', va='top')
         
+        # Set fixed axis limits for consistent visualization across all subplots
+        ax.set_xlim(runtime_lim)
+        ax.set_ylim(perf_lim)
+        ax.set_zlim(corr_lim)
+        
         # Set viewing angle
         ax.view_init(elev=30, azim=-60)
         
@@ -225,7 +245,7 @@ for method_name, df, pareto_fronts_dict, main_color, row in methods:
                            alpha=0.3, edgecolor='black', linewidth=2))
 
 plt.suptitle('Pareto Front Evolution Comparison: NSGA-II vs Random Search', 
-             fontweight='bold', fontsize=16, y=0.55)
+             fontweight='bold', fontsize=16, y=0.52)
 plt.subplots_adjust(wspace=0.2, hspace=0.2, left=0.05, right=0.95, top=0.5, bottom=0.05)
 plt.savefig(figures_dir / 'comparison_pareto_fronts.jpg', dpi=300, bbox_inches='tight')
 plt.close()
